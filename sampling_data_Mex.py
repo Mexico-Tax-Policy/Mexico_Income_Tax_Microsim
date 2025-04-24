@@ -2,12 +2,12 @@
 This is a file that allows sampling of a large dataset.
 """
 import sys
-sys.path.insert(0, r'C:/Users/Sayra Martínez/OneDrive/Documents/MIDP/Tax Microsim Mexico/Mexico_Income_Tax_Microsim')
+sys.path.insert(0, r'C:\Users\Sayra Martínez\OneDrive\Documents\MIDP\MexicoTaxation\Mexico_Income_Tax_Microsim')
 from stata_python import *
 import pandas as pd
 import numpy as np
 
-p_df=pd.read_csv(r'C:\Users\Sayra Martínez\OneDrive\Documents\MIDP\Tax Microsim Mexico\Mexico_Income_Tax_Microsim\data_mexico_big.csv')
+p_df=pd.read_csv(r'C:\Users\Sayra Martínez\OneDrive\Documents\MIDP\MexicoTaxation\Mexico_Income_Tax_Microsim\data_mexico_big.csv')
 p_df = p_df.rename(columns={'id_n':'id_n1'})
 p_df['id_n']=range(1, len(p_df) + 1)
 p_df['weight'] = p_df['factor']
@@ -33,7 +33,7 @@ pit_weight.to_csv('taxcalc/pit_mexico_big_weights.csv')
 tax_collection_2022_billion =  1129.99 
 
 # synthetic data has only 100,000 observations
-tax_collection_big_billion = 483.58
+tax_collection_big_billion = 484.01
 
 multiplicative_factor1 = tax_collection_2022_billion/tax_collection_big_billion
 

@@ -60,5 +60,6 @@
     10000000.0,
     9e+99
   ],
-  "income_measure": "total_gross_income"
+  "income_measure": "total_gross_income",
+  "reform_filename": "pit_reform_output.csv"
 }

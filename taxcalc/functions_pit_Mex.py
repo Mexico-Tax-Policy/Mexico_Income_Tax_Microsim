@@ -226,11 +226,11 @@ def cal_t_cum_income(allowance_general, UMA_value_y, income_wages_t, income_divi
     return tax_cum_income
 
 @iterate_jit(nopython=True)
-def cal_deductions(UMA_value_y, deductible_expenses, total_gross_income, authorized_deduction):
+def cal_deductions(limit_deduction_of_inc, limit_deduction_as_UMA, UMA_value_y, deductible_expenses, total_gross_income, authorized_deduction):
     """
     Compute authorized deductions.
     """
-    authorized_deduction = min(min(deductible_expenses, total_gross_income * 0.15),  UMA_value_y * 5) 
+    authorized_deduction = min(min(deductible_expenses, total_gross_income * limit_deduction_of_inc),  UMA_value_y * limit_deduction_as_UMA) 
     return authorized_deduction
 
 @iterate_jit(nopython=True)
@@ -348,5 +348,5 @@ def cal_total_pit(pitax_w, additional_dividend_pitax, gambling_pitax, capitalgai
     """
     Compute Total PIT.
     """
-    pitax = pitax_w + additional_dividend_pitax + gambling_pitax + capitalgains_pitax + pending_pitax - subsidy_w
+    pitax = max((pitax_w + additional_dividend_pitax + gambling_pitax + capitalgains_pitax + pending_pitax - subsidy_w), 0)
     return pitax

@@ -9,6 +9,9 @@ import json
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
+sys.path.insert(0, r'C:\Users\Sayra Martínez\OneDrive\Documents\MIDP\MexicoTaxation\Mexico_Income_Tax_Microsim')
+from stata_python import plot_kakwani_lorenz_curve_reform
 
 # Initialize the variables
 
@@ -21,14 +24,14 @@ vars['vat'] = 0
 tax_type = 'pit'
 vars['DEFAULTS_FILENAME'] = "current_law_policy_pit_Mex.json"
 vars['GROWFACTORS_FILENAME'] = "growfactors_pit_Mex.csv" 
-vars['pit_data_filename'] = "data_pit_Mex.csv"
-vars['pit_weights_filename'] = "pit_weights_Mex.csv"
+vars['pit_data_filename'] = "pit_mexico_big.csv"
+vars['pit_weights_filename'] = "pit_mexico_big_weights.csv"
 vars['pit_records_variables_filename'] = "records_variables_pit_Mex.json"
 vars['pit_benchmark_filename'] = "tax_incentives_benchmark_pit_training.json"
 vars['pit_elasticity_filename'] = "pit_elasticity_selection.json"
 vars['pit_functions_filename'] = "functions_pit_Mex.py"
 vars['pit_function_names_filename'] = "function_names_pit_Mex.json"
-vars['pit_distribution_json_filename'] = 'pit_distribution_Mex.json'
+vars['pit_distribution_json_filename'] = 'pit_distribution_training.json'
 
 vars['vat_data_filename'] = "gst.csv"
 vars['vat_weights_filename'] = "gst_weights.csv"
@@ -41,10 +44,10 @@ vars['cit_records_variables_filename'] = "corprecords_variables.json"
 vars['gdp_filename'] = 'gdp_nominal_training.csv'
 vars["start_year"] = 2022
 vars["end_year"] = 2027
-vars["SALARY_VARIABLE"] = "income_wages_t"
+vars["SALARY_VARIABLE"] = "gross_wage"
 vars['elasticity_filename'] = "pit_elasticity_selection.json"
-vars['DIST_VARIABLES'] = ['weight', 'income_wages_t', 'pitax']
-vars['DIST_TABLE_COLUMNS'] = ['weight', 'income_wages_t', 'pitax']        
+vars['DIST_VARIABLES'] = ['weight', 'gross_wage', 'pitax']
+vars['DIST_TABLE_COLUMNS'] = ['weight', 'gross_wage', 'pitax']        
 vars['DIST_TABLE_LABELS'] = ['Returns',
                      'Gross Wages',
                      'PITax']
@@ -57,7 +60,7 @@ vars['STANDARD_ROW_NAMES'] = [ "<0", "=0", "0-0.5 m", "0.5-1m", "1-1.5m", "1.5-2
                       "2-3m", "3-4m", "4-5m", "5-10m", ">10m", "ALL"]
 vars['STANDARD_INCOME_BINS'] = [-9e99, -1e-9, 1e-9, 5e5, 10e5, 15e5, 20e5, 30e5,
                         40e5, 50e5, 100e5, 9e99]
-vars['income_measure'] = "income_wages_t"
+vars['income_measure'] = "total_gross_income"
 vars['show_error_log'] = 0
 vars['verbose'] = 0
 vars['data_start_year'] = 2022
@@ -85,10 +88,11 @@ calc1 = Calculator(policy=pol, records=recs, verbose=False)
 calc1.calc_all()
 
 # specify Calculator object for reform in JSON file
-reform = Calculator.read_json_param_objects('app0_reform_pit_Mex.json', None)
+reform = Calculator.read_json_param_objects('app0_reform_pit_Mex_statusquo.json', None)
 pol.implement_reform(reform['policy'])
 calc2 = Calculator(policy=pol, records=recs, verbose=False)
 calc2.calc_all()
+
 
 # compare aggregate results from two calculators
 weighted_tax1 = calc1.weighted_total_pit('pitax')
@@ -104,15 +108,15 @@ calc1.calc_all()
 calc2.calc_all()
 
 # compare aggregate results from two calculators
-weighted_tax1 = calc1.weighted_total_pit('pitax')
-weighted_tax2 = calc2.weighted_total_pit('pitax')
+weighted_tax3 = calc1.weighted_total_pit('pitax')
+weighted_tax4 = calc2.weighted_total_pit('pitax')
 total_weights = calc1.total_weight_pit()
-print(f'Tax 1 {weighted_tax1 * 1e-9:,.2f}')
-print(f'Tax 2 {weighted_tax2 * 1e-9:,.2f}')
+print(f'Tax 3 {weighted_tax3 * 1e-9:,.2f}')
+print(f'Tax 4 {weighted_tax4 * 1e-9:,.2f}')
 print(f'Total weight {total_weights * 1e-6:,.2f}')
 
 # dump out records
-dump_vars = ['id_n', 'Year', 'income_wages_t', 'tax_c_income', 'pitax_w', 'pitax']
+dump_vars = ['id_n', 'age', 'weight', 'tot_inc','gross_wage', 'wage_inc', 'total_gross_income', 'taxable_income', 'tax_cum_income', 'authorized_deduction', 'subsidy_w', 'pending_pitax', 'capitalgains_pitax', 'gambling_pitax', 'additional_dividend_pitax', 'pitax']
 dumpdf = calc1.dataframe(dump_vars)
 dumpdf['pitax1'] = calc1.array('pitax')
 dumpdf['pitax2'] = calc2.array('pitax')
@@ -121,65 +125,153 @@ column_order = dumpdf.columns
 
 dumpdf.to_csv('app1-dump_pit_Mex.csv', columns=column_order,
               index=False, float_format='%.0f')
-
-
+#I additionaly save it for pareto analysis
+#dumpdf.to_csv('forpareto_mex.csv', columns=column_order,
+#              index=False, float_format='%.0f')
 
 def calc_gini(values):
+    """Calculate the Gini coefficient."""
     n = len(values)
-    cumulative_income= values.sum()
-    gini_index = ((2 * np.sum((np.arange(1, n + 1) * values))) / (n *
-    cumulative_income)) - ((n + 1) / n)
+    sorted_vals = np.sort(values)
+    cumvals = np.cumsum(sorted_vals)
+    gini_index = ((2 * np.sum((np.arange(1, n + 1) * sorted_vals))) / (n * cumvals[-1])) - ((n + 1) / n)
     return gini_index
 
-def plot_lorenz_curve_reform(values_pre, values_post, gini_pre, gini_post, title):
-    """Plot the Lorenz Curve given an array of values and the Gini coefficient."""
-    values_pre = np.sort(values_pre)
-    values_pre = np.append([0], values_pre)  # Start at 0
-    cum_values_pre = np.cumsum(values_pre) / np.sum(values_pre)  # Normalize cumulative values
-    cum_pop_pre = np.linspace(0, 1, len(cum_values_pre))  # Population percentage
+# Filter and sort data
+dumpdf = dumpdf[dumpdf['total_gross_income'] > 0]
+dumpdf = dumpdf.sort_values(by='total_gross_income')
 
-    values_post = np.sort(values_post)
-    values_post = np.append([0], values_post)  # Start at 0
-    cum_values_post = np.cumsum(values_post) / np.sum(values_post)  # Normalize cumulative values
-    cum_pop_post = np.linspace(0, 1, len(cum_values_post))  # Population percentage
-    
-    plt.figure(figsize=(8, 6))
-    plt.plot(cum_pop_pre, cum_values_pre, label="Lorenz Curve Pre Reform")
-    plt.plot(cum_pop_post, cum_values_post, label="Lorenz Curve Post Reform")
-    plt.plot([0, 1], [0, 1], linestyle="--", color="gray")  # Perfect equality line
-    plt.fill_between(cum_pop_pre, cum_values_pre, cum_values_post, color="skyblue", alpha=0.5)
+# Extract arrays
+values_inc = dumpdf['total_gross_income'].dropna().values
+values_pit1 = dumpdf['pitax1'].dropna().values
+values_pit2 = dumpdf['pitax2'].dropna().values
 
-    plt.xlabel("Cumulative Population Share")
-    plt.ylabel("Cumulative Income Share")
-    plt.title(f"{title} {gini_post-gini_pre:.4f}")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+# --- Calculate Gini Coefficients ---
+gini_income = calc_gini(values_inc)
+gini_tax1 = calc_gini(values_pit1)
+gini_tax2 = calc_gini(values_pit2)
 
-dumpdf = dumpdf.sort_values(by=['income_wages_t'])
-# Extract relevant field
-values_pre = dumpdf['income_wages_t'].dropna().values  # Remove NaNs if any
-gini_pre = calc_gini(values_pre)
-print(f'Gini of PIT Pre Reform : {gini_pre:.2f}') 
+print(f"Gini (Income): {gini_income:.4f}")
+print(f"Gini (Current Tax): {gini_tax1:.4f}")
+print(f"Gini (Reform Tax): {gini_tax2:.4f}")
 
-# Extract relevant field
-values_post = dumpdf['pitax1'].dropna().values  # Remove NaNs if any
-gini_post = calc_gini(values_post)
-print(f'Gini of PIT Pre Reform : {gini_post:.2f}')
+# --- Plot Lorenz Curve with Kakwani Index ---
+plot_kakwani_lorenz_curve_reform(
+    income=values_inc,
+    tax1=values_pit1,
+    tax2=values_pit2,
+    label1="Lorenz Curve PIT Pre-reform",
+    label2="Lorenz Curve PIT Post-Reform",
+    title="Lorenz Curves and Kakwani Index (2026)"
+)
 
-print("Kakwani Index: %0.2f." % (gini_post - gini_pre))
+# --- Compute weighted average ETRs by income percentile for smoother plot ---
 
-title = 'Kakwani Index : ' 
-# Plot Lorenz Curve
-plot_lorenz_curve_reform(values_pre, values_post, gini_pre, gini_post, title)
+# Filter valid income values
+df_filtered = dumpdf[dumpdf['total_gross_income'] > 0].copy()
 
-# Extract relevant field
-values_post = dumpdf['pitax2'].dropna().values  # Remove NaNs if any
-gini_post = calc_gini(values_post)
-print(f'Gini of PIT Post Reform : {gini_post:.2f}')
+# Compute ETRs
+df_filtered['ETR'] = df_filtered['pitax1'] / df_filtered['total_gross_income']
+df_filtered['ETR_ref'] = df_filtered['pitax2'] / df_filtered['total_gross_income']
 
-print("Kakwani Index: %0.2f." % (gini_post - gini_pre))
+# Remove NaNs and infinite values
+df_filtered = df_filtered.replace([np.inf, -np.inf], np.nan)
+df_filtered = df_filtered.dropna(subset=['ETR', 'ETR_ref', 'weight'])
 
-title = 'Kakwani Index : ' 
-# Plot Lorenz Curve
-plot_lorenz_curve_reform(values_pre, values_post, gini_pre, gini_post, title)
+# Create income percentiles using qcut
+df_filtered['percentile'] = pd.qcut(df_filtered['total_gross_income'], 100, labels=False) + 1
+
+# Group by percentile and compute weighted average ETR
+etr_summary = df_filtered.groupby('percentile').apply(
+    lambda x: pd.Series({
+        'ETR': np.average(x['ETR'], weights=x['weight']),
+        'ETR_ref': np.average(x['ETR_ref'], weights=x['weight'])
+    })
+).reset_index()
+
+# Define annual minimum wage value
+#2025
+#min_wage_annual = 100368.00
+min_wage_annual = 62233.20 * 1.036
+s_min_wage_annual = min_wage_annual * 1.21
+GDP_pc = 19.3615 * 11.26 * 1000
+
+# Compute percentile for minimum wage
+min_wage_percentile = (
+    df_filtered[df_filtered['total_gross_income'] <= min_wage_annual]['weight'].sum() /
+    df_filtered['weight'].sum()
+) * 100
+
+# Percentile for 1.2x minimum wage
+s_min_wage_percentile = (
+    df_filtered[df_filtered['total_gross_income'] <= s_min_wage_annual]['weight'].sum() /
+    df_filtered['weight'].sum()
+) * 100
+
+# Percentile for GDP per capita
+gdp_pc_percentile = (
+    df_filtered[df_filtered['total_gross_income'] <= GDP_pc]['weight'].sum() /
+    df_filtered['weight'].sum()
+) * 100
+
+print(f"Minimum wage is at approx. percentile: {min_wage_percentile:.1f}")
+print(f"1.2 Minimum wage is at approx. percentile: {s_min_wage_percentile:.1f}")
+print(f"GDP per capita is at approx. percentile: {gdp_pc_percentile:.1f}")
+
+# --- Plot ---
+plt.figure(figsize=(10, 6))
+plt.plot(etr_summary['percentile'], etr_summary['ETR'], label="ETR Current Law", linewidth=2)
+plt.plot(etr_summary['percentile'], etr_summary['ETR_ref'], label="ETR Reform", linewidth=2)
+
+# Min wage line
+plt.axvline(x=min_wage_percentile, color='gray', linestyle='--', linewidth=1.5)
+plt.text(min_wage_percentile + 1, 0.02, 'Min Wage', rotation=90, color='black', fontsize=9)
+
+# GDP per capita line
+plt.axvline(x=gdp_pc_percentile, color='gray', linestyle='-.', linewidth=1.5)
+plt.text(gdp_pc_percentile + 1, 0.02, 'GDP per Capita - tax rate: 21.36%', rotation=90, color='black', fontsize=9)
+
+# Optional: 1.2x min wage
+plt.axvline(x=s_min_wage_percentile, color='red', linestyle=':', linewidth=1.5)
+plt.text(s_min_wage_percentile + 1, 0.02, '1.2 Min Wage - tax rate: 10.88%', rotation=90, color='black', fontsize=9)
+
+# Formatting
+plt.xlabel("Income Percentile")
+plt.ylabel("Effective Tax Rate")
+plt.title("Effective Tax Rate (ETR) by Percentile")
+plt.xticks(np.arange(0, 101, 10))
+plt.ylim(0, 0.25)
+plt.grid(alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+# Create a new figure for just the original ETR
+plt.figure(figsize=(10, 6))
+
+# Plot only the original ETR line
+plt.plot(etr_summary['percentile'], etr_summary['ETR'], label="ETR Current Law", linewidth=2, color='#4373B9')
+
+# Keep the same reference lines for context
+# Min wage line
+plt.axvline(x=min_wage_percentile, color='gray', linestyle='--', linewidth=1.5)
+plt.text(min_wage_percentile + 1, 0.02, 'Min Wage', rotation=90, color='black', fontsize=9)
+
+# GDP per capita line
+plt.axvline(x=gdp_pc_percentile, color='gray', linestyle='-.', linewidth=1.5)
+plt.text(gdp_pc_percentile + 1, 0.02, 'GDP per Capita - tax rate: 21.36%', rotation=90, color='black', fontsize=9)
+
+# Optional: 1.2x min wage
+plt.axvline(x=s_min_wage_percentile, color='red', linestyle=':', linewidth=1.5)
+plt.text(s_min_wage_percentile + 1, 0.02, '1.2 Min Wage - tax rate: 10.88%', rotation=90, color='black', fontsize=9)
+
+# Formatting
+plt.xlabel("Income Percentile")
+plt.ylabel("Effective Tax Rate")
+plt.title("Effective Tax Rate (ETR) by Percentile for Gross Income excluding cash transfers")
+plt.xticks(np.arange(0, 101, 10))
+plt.ylim(0, 0.25)
+plt.grid(alpha=0.3)
+plt.legend()
+plt.tight_layout()
+plt.show()
