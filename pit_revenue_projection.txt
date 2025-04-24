@@ -1,7 +1,7 @@
-                    2022     2023     2024     2025     2026     2027
-current_law_All  1129.99  1255.40  1337.91  1240.72  1240.72  1240.72
-reform_All       1129.99  1255.40  1339.75  1242.43  1242.43  1242.43
+                    2022     2023     2024     2025     2026     2027     2028     2029     2030
+current_law_All  1129.99  1255.41  1337.91  1240.72  1240.72  1240.72  1240.72  1240.72  1240.72
+reform_All       1129.99  1255.41  1337.91  1240.72  1238.62  1238.62  1238.62  1238.62  1238.62
 
-                   policy
-2024  {'_rate11': [0.37]}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       policy
+2026  {'_rate1': [0.085], '_tbrk1': [80000.0], '_rate2': [0.16], '_tbrk2': [200000.0], '_rate3': [0.21], '_tbrk3': [370000.0], '_rate4': [0.26], '_tbrk4': [600000.0], '_rate5': [0.3], '_tbrk5': [1000000.0], '_rate6': [0.32], '_tbrk6': [1700000.0], '_rate7': [0.35], '_tbrk7': [1.0000000000000001e+99], '_rate8': [0.35], '_tbrk8': [2.0000000000000002e+99], '_rate9': [0.35], '_tbrk9': [3e+99], '_rate10': [0.35], '_tbrk10': [4.0000000000000004e+99], '_rate11': [0.35], '_tbrk11': [5e+99], '_capitalgains_bonds_rate': [0.1], '_subsidy_rate': [0.0], '_allowance_pensions': [0.0], '_allowance_realestate': [0.0], '_allowance_land_sales': [0.0], '_allowance_bonus_overtime': [0.0], '_allowance_vacations_profit_sharing': [0.0], '_allowance_christmas': [0.0], '_allowance_wages': [0.0], '_allowance_general': [1.2], '_limit_deduction_of_inc': [0.0], '_limit_deduction_as_UMA': [1.0]}
 

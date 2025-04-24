@@ -1,11 +1,308 @@
 {
   "1": {
-    "selected_item": "rate11",
+    "selected_item": "rate1",
     "selected_year": [
-      "2024"
+      "2026"
     ],
     "selected_value": [
-      "0.37"
+      "0.085"
+    ]
+  },
+  "2": {
+    "selected_item": "tbrk1",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "80000.0"
+    ]
+  },
+  "3": {
+    "selected_item": "rate2",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.16"
+    ]
+  },
+  "4": {
+    "selected_item": "tbrk2",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "200000.0"
+    ]
+  },
+  "5": {
+    "selected_item": "rate3",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.21"
+    ]
+  },
+  "6": {
+    "selected_item": "tbrk3",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "370000.0"
+    ]
+  },
+  "7": {
+    "selected_item": "rate4",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.26"
+    ]
+  },
+  "8": {
+    "selected_item": "tbrk4",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "600000.0"
+    ]
+  },
+  "9": {
+    "selected_item": "rate5",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.3"
+    ]
+  },
+  "10": {
+    "selected_item": "tbrk5",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "1000000.0"
+    ]
+  },
+  "11": {
+    "selected_item": "rate6",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.32"
+    ]
+  },
+  "12": {
+    "selected_item": "tbrk6",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "1700000.0"
+    ]
+  },
+  "13": {
+    "selected_item": "rate7",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.35"
+    ]
+  },
+  "14": {
+    "selected_item": "tbrk7",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "1.0000000000000001e+99"
+    ]
+  },
+  "15": {
+    "selected_item": "rate8",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.35"
+    ]
+  },
+  "16": {
+    "selected_item": "tbrk8",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "2.0000000000000002e+99"
+    ]
+  },
+  "17": {
+    "selected_item": "rate9",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.35"
+    ]
+  },
+  "18": {
+    "selected_item": "tbrk9",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "3e+99"
+    ]
+  },
+  "19": {
+    "selected_item": "rate10",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.35"
+    ]
+  },
+  "20": {
+    "selected_item": "tbrk10",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "4.0000000000000004e+99"
+    ]
+  },
+  "21": {
+    "selected_item": "rate11",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.35"
+    ]
+  },
+  "22": {
+    "selected_item": "tbrk11",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "5e+99"
+    ]
+  },
+  "23": {
+    "selected_item": "capitalgains_bonds_rate",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.1"
+    ]
+  },
+  "24": {
+    "selected_item": "subsidy_rate",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.0"
+    ]
+  },
+  "25": {
+    "selected_item": "allowance_pensions",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.0"
+    ]
+  },
+  "26": {
+    "selected_item": "allowance_realestate",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.0"
+    ]
+  },
+  "27": {
+    "selected_item": "allowance_land_sales",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.0"
+    ]
+  },
+  "28": {
+    "selected_item": "allowance_bonus_overtime",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.0"
+    ]
+  },
+  "29": {
+    "selected_item": "allowance_vacations_profit_sharing",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.0"
+    ]
+  },
+  "30": {
+    "selected_item": "allowance_christmas",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.0"
+    ]
+  },
+  "31": {
+    "selected_item": "allowance_wages",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.0"
+    ]
+  },
+  "32": {
+    "selected_item": "allowance_general",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "1.2"
+    ]
+  },
+  "33": {
+    "selected_item": "limit_deduction_of_inc",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "0.0"
+    ]
+  },
+  "34": {
+    "selected_item": "limit_deduction_as_UMA",
+    "selected_year": [
+      "2026"
+    ],
+    "selected_value": [
+      "1.0"
     ]
   }
 }

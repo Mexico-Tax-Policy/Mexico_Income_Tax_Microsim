@@ -1,0 +1,389 @@
+{
+  "DEFAULTS_FILENAME": "current_law_policy_pit_Mex.json",
+  "GROWFACTORS_FILENAME": "growfactors_pit_Mex.csv",
+  "pit_data_filename": "pit_mexico_big.csv",
+  "pit_weights_filename": "pit_mexico_big_weights.csv",
+  "pit_records_variables_filename": "records_variables_pit_Mex.json",
+  "pit_benchmark_filename": "tax_incentives_benchmark_pit_mexico.json",
+  "pit_elasticity_filename": "pit_elasticity_selection.json",
+  "pit_functions_filename": "functions_pit_Mex.py",
+  "pit_function_names_filename": "function_names_pit_Mex.json",
+  "pit_distribution_json_filename": "pit_distribution_training.json",
+  "gdp_filename": "gdp_nominal_pit_Mex.csv",
+  "cit_data_filename": "cit_data_training.csv",
+  "cit_weights_filename": "cit_weights_training.csv",
+  "cit_records_variables_filename": "records_variables_cit_training.json",
+  "cit_benchmark_filename": "tax_incentives_benchmark_cit.json",
+  "cit_elasticity_filename": "elasticity_cit_training.json",
+  "cit_functions_filename": "functions_cit_training.py",
+  "cit_function_names_filename": "function_names_cit_training.json",
+  "cit_distribution_json_filename": "cit_distribution_egypt.json",
+  "cit_max_lag_years": 10,
+  "vat_data_filename": "vat.csv",
+  "vat_weights_filename": "vat_weights.csv",
+  "vat_records_variables_filename": "vat_records_variables.json",
+  "vat_benchmark_filename": "vat_tax_incentives_benchmark.json",
+  "vat_elasticity_filename": "vat_elasticity_macedonia.json",
+  "vat_functions_filename": "vat_functions.py",
+  "vat_function_names_filename": "vat_function_names.json",
+  "vat_distribution_json_filename": "vat_distribution.json",
+  "pit_display_distribution_table_byincome": 0,
+  "pit_display_distribution_table_bydecile": 0,
+  "pit_display_revenue_table": 1,
+  "cit_display_distribution_table_byincome": 0,
+  "cit_display_distribution_table_bydecile": 0,
+  "cit_display_revenue_table": 1,
+  "vat_display_distribution_table_byincome": 0,
+  "vat_display_distribution_table_bydecile": 0,
+  "vat_display_revenue_table": 1,
+  "kakwani_list": [],
+  "start_year": "2022",
+  "end_year": "2027",
+  "data_start_year": 2022,
+  "GDP_Nominal": {
+    "2022": 24273381.8,
+    "2023": 25073284.6,
+    "2024": 25491172.68,
+    "2025": 25627125.6,
+    "2026": 25883396.85,
+    "2027": 26142230.81,
+    "2028": 26403653.11,
+    "2029": 26667689.64,
+    "2030": 26934366.53,
+    "2031": 27203710.19,
+    "2032": 27475747.28
+  },
+  "percent_gdp": 0,
+  "SALARY_VARIABLE": "total_gross_income",
+  "vat_id_var": "id_n",
+  "charts_ready": 0,
+  "chart_list": [],
+  "show_error_log": 0,
+  "verbose": 0,
+  "pit": 1,
+  "cit": 0,
+  "vat": 0,
+  "pit_id_var": "id_n",
+  "pit_functions_names_filename": "function_names_pit_Mex.json",
+  "attribute_vars": [],
+  "pit_adjust_behavior": 0,
+  "cit_adjust_behavior": 0,
+  "vat_adjust_behavior": 0,
+  "pit_distribution_table": 0,
+  "pit_display_distribution_table": 0,
+  "pit_display_distribution_table_by_attribute": 0,
+  "cit_distribution_table": 0,
+  "cit_display_distribution_table": 0,
+  "cit_display_distribution_table_by_attribute": 0,
+  "vat_distribution_table": 0,
+  "vat_display_distribution_table": 0,
+  "vat_display_distribution_table_by_attribute": 0,
+  "block_selected_dict": {
+    "1": {
+      "selected_item": "rate1",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.08"
+      ]
+    },
+    "2": {
+      "selected_item": "tbrk1",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "80000.0"
+      ]
+    },
+    "3": {
+      "selected_item": "rate2",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.16"
+      ]
+    },
+    "4": {
+      "selected_item": "tbrk2",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "200000.0"
+      ]
+    },
+    "5": {
+      "selected_item": "rate3",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.21"
+      ]
+    },
+    "6": {
+      "selected_item": "tbrk3",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "370000.0"
+      ]
+    },
+    "7": {
+      "selected_item": "rate4",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.26"
+      ]
+    },
+    "8": {
+      "selected_item": "tbrk4",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "600000.0"
+      ]
+    },
+    "9": {
+      "selected_item": "rate5",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.3"
+      ]
+    },
+    "10": {
+      "selected_item": "tbrk5",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "1200000.0"
+      ]
+    },
+    "11": {
+      "selected_item": "rate6",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.32"
+      ]
+    },
+    "12": {
+      "selected_item": "tbrk6",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "1700000.0"
+      ]
+    },
+    "13": {
+      "selected_item": "rate7",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.35"
+      ]
+    },
+    "14": {
+      "selected_item": "tbrk7",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "1.0000000000000001e+99"
+      ]
+    },
+    "15": {
+      "selected_item": "rate8",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.35"
+      ]
+    },
+    "16": {
+      "selected_item": "tbrk8",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "2.0000000000000002e+99"
+      ]
+    },
+    "17": {
+      "selected_item": "rate9",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.35"
+      ]
+    },
+    "18": {
+      "selected_item": "tbrk9",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "3e+99"
+      ]
+    },
+    "19": {
+      "selected_item": "rate10",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.35"
+      ]
+    },
+    "20": {
+      "selected_item": "tbrk10",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "4.0000000000000004e+99"
+      ]
+    },
+    "21": {
+      "selected_item": "rate11",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.35"
+      ]
+    },
+    "22": {
+      "selected_item": "tbrk11",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "5e+99"
+      ]
+    },
+    "23": {
+      "selected_item": "capitalgains_bonds_rate",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.1"
+      ]
+    },
+    "24": {
+      "selected_item": "subsidy_rate",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.0"
+      ]
+    },
+    "25": {
+      "selected_item": "allowance_pensions",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.0"
+      ]
+    },
+    "26": {
+      "selected_item": "allowance_realestate",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.0"
+      ]
+    },
+    "27": {
+      "selected_item": "allowance_land_sales",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.0"
+      ]
+    },
+    "28": {
+      "selected_item": "allowance_bonus_overtime",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.0"
+      ]
+    },
+    "29": {
+      "selected_item": "allowance_vacations_profit_sharing",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.0"
+      ]
+    },
+    "30": {
+      "selected_item": "allowance_christmas",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.0"
+      ]
+    },
+    "31": {
+      "selected_item": "allowance_wages",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.0"
+      ]
+    },
+    "32": {
+      "selected_item": "allowance_general",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "1.2"
+      ]
+    },
+    "33": {
+      "selected_item": "limit_deduction_of_inc",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "0.0"
+      ]
+    },
+    "34": {
+      "selected_item": "limit_deduction_as_UMA",
+      "selected_year": [
+        "2026"
+      ],
+      "selected_value": [
+        "1.0"
+      ]
+    }
+  }
+}

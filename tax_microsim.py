@@ -35,6 +35,8 @@ from PIL import Image,ImageTk
 class Progress_Bar:
     def __init__(self, master):
         self.progress_line(master)
+        # Initialize reform flag
+        self.reform_loaded_from_file = False
     
     def progress_line(self, master):
         self._progress_label = tk.Label(text="Running...", anchor = "w")
@@ -397,29 +399,45 @@ class Application(tk.Frame):
     #    self.run_core_program(run_type)
     
     def clicked_generate_policy_revenues_from_reform_file(self, reform_filename):
+        import json
+        import pandas as pd
+        # this is the core engine that reads reform.json and does all the work
+        from generate_policy_revenues import generate_policy_revenues
+    
+        # 1) read your CSV
         df = pd.read_csv(reform_filename)
-        self.block_selected_dict = {}
+    
+        # 2) build block_selected_dict exactly as generate_policy_revenues expects manually
+        block_selected_dict = {}
         for idx, row in df.iterrows():
-            entry = {
-                    "selected_item": str(row["Policy Parameter"]),
-                    "selected_year": [str(row["Year"])],
-                    "selected_value": [str(row["Value"])]
-                    }
-            self.block_selected_dict[str(idx + 1)] = entry  # JSON keys start from 1
-        self.run_core_program('revenue_with_reform_file')
-        
+            block_selected_dict[str(idx + 1)] = {
+                "selected_item":  str(row["Policy Parameter"]),
+                "selected_year": [str(row["Year"])],
+                "selected_value": [str(row["Value"])]
+            }
+            
+        # Store the block_selected_dict in the instance and set the flag
+        self.block_selected_dict = block_selected_dict
+        self.reform_loaded_from_file = True
+    
+        # 3) write out reform.json for the core
+        with open("reform.json", "w") as f:
+            json.dump(block_selected_dict, f, indent=2)
+    
+        # 4) hand off to the usual engine
+        generate_policy_revenues()
+            
     def clicked_generate_policy_revenues(self):
         self.run_core_program('revenue')
 
     def run_core_program(self, run_type):
-        #Save all the GUI inputs into global_vars.json file"
-        # and retrieve the saved inputs for use
-        #global_vars = self.get_inputs()
-        #print('before revenue table in clicked_generate_policy_revenues', global_vars['cit'+'_display_revenue_table'])        
+        # Save inputs and setup
         global_vars = self.get_inputs_after_saving_current_vars()
         if global_vars['show_error_log']:
             self.logger.clear()
         self.verbose = global_vars['verbose']
+        
+        # Set display flags based on run_type
         if run_type=='dist_by_decile':
             self.vars[self.tax_type+'_display_distribution_table_bydecile'] = 1
             self.vars[self.tax_type+'_display_distribution_table_byincome'] = 0
@@ -428,7 +446,7 @@ class Application(tk.Frame):
             self.vars[self.tax_type+'_display_distribution_table_bydecile'] = 0
             self.vars[self.tax_type+'_display_distribution_table_byincome'] = 1
             self.vars[self.tax_type+'_display_revenue_table'] = 0            
-        elif (run_type=='revenue') or (run_type=='revenue_with_reform_file'):
+        elif run_type=='revenue':  # Simplified to just 'revenue'
             self.vars[self.tax_type+'_display_distribution_table_bydecile'] = 0
             self.vars[self.tax_type+'_display_distribution_table'] = 0
             self.vars[self.tax_type+'_display_revenue_table'] = 1
@@ -439,18 +457,17 @@ class Application(tk.Frame):
             
         self.save_inputs()
         
-        if (run_type!='revenue_with_reform_file'):
+        # Check if we need to generate a new reform.json
+        if not hasattr(self, 'reform_loaded_from_file') or not self.reform_loaded_from_file:
+            # Generate reform.json from GUI inputs
             self.block_selected_dict = self.generate_changes_dict(self.block_widget_dict, 
-                                                                  self.year_value_pairs_policy_dict, 
-                                                                  year_check=1, 
-                                                                  start_year=global_vars['start_year'], 
-                                                                  end_year=global_vars['end_year'],
-                                                                  sector_widget=0)
-        with open('reform.json', 'w') as f:
-            f.write(json.dumps(self.block_selected_dict, indent=2))
-
-        if self.verbose:
-            print('Reform dictionary: ', self.block_selected_dict)
+                                                                self.year_value_pairs_policy_dict, 
+                                                                year_check=1, 
+                                                                start_year=global_vars['start_year'], 
+                                                                end_year=global_vars['end_year'],
+                                                                sector_widget=0)
+            with open('reform.json', 'w') as f:
+                f.write(json.dumps(self.block_selected_dict, indent=2))
         
         if global_vars[self.tax_type+'_adjust_behavior']:
             self.elasticity_selected_dict = self.generate_changes_dict(self.elasticity_widget_dict, 

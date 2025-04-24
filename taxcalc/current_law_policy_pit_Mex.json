@@ -1052,6 +1052,60 @@
         "out_of_range_maxmsg": "",
         "out_of_range_action": "stop"        
     }, 
+    "_limit_deduction_of_inc": {
+        "long_name": "Limit of deductions as % of Gross Income",
+        "description": "Deductions has specific and general limits. The general limits are set as the minimum between a % of gross incomes or a number of UMAS",
+        "itr_ref": "R code",
+        "notes": "",
+        "row_var": "AYEAR",
+        "row_label": [
+            "2018"
+        ],
+        "start_year": 2018,
+        "cpi_inflatable": false,
+        "cpi_inflated": false,
+        "col_var": "",
+        "col_label": "",
+        "boolean_value": false,
+        "integer_value": false,
+        "value": [
+            0.15
+        ],
+        "range": {
+            "min": 0,
+            "max": 1
+        },
+        "out_of_range_minmsg": "",
+        "out_of_range_maxmsg": "",
+        "out_of_range_action": "stop"        
+    },  
+    "_limit_deduction_as_UMA": {
+        "long_name": "Limit of deductions as a number of UMAs",
+        "description": "Deductions has specific and general limits. The general limits are set as the minimum between a % of gross incomes or a number of UMAS",
+        "itr_ref": "R code",
+        "notes": "",
+        "row_var": "AYEAR",
+        "row_label": [
+            "2018"
+        ],
+        "start_year": 2018,
+        "cpi_inflatable": false,
+        "cpi_inflated": false,
+        "col_var": "",
+        "col_label": "",
+        "boolean_value": false,
+        "integer_value": false,
+        "value": [
+            5
+        ],
+        "range": {
+            "min": 0,
+            "max": 10
+        },
+        "out_of_range_minmsg": "",
+        "out_of_range_maxmsg": "",
+        "out_of_range_action": "stop"        
+    },                   
     "_allowance_wages": {
         "long_name": "Number of UMAs of the allowance",
         "description": "Limit of the allowance in terms of UMA (days per week) applicable to wages or salary",
@@ -2336,7 +2390,61 @@
         "out_of_range_minmsg": "",
         "out_of_range_maxmsg": "",
         "out_of_range_action": "stop"        
-    },    
+    },
+    "_limit_deduction_of_inc_curr_law": {
+        "long_name": "Limit of the deductions as % of Gross Income",
+        "description": "Deductions has specific and general limits. The general limits are set as the minimum between a % of gross incomes or a number of UMAS",
+        "itr_ref": "R code",
+        "notes": "",
+        "row_var": "AYEAR",
+        "row_label": [
+            "2018"
+        ],
+        "start_year": 2018,
+        "cpi_inflatable": false,
+        "cpi_inflated": false,
+        "col_var": "",
+        "col_label": "",
+        "boolean_value": false,
+        "integer_value": false,
+        "value": [
+            0.15
+        ],
+        "range": {
+            "min": 0,
+            "max": 1
+        },
+        "out_of_range_minmsg": "",
+        "out_of_range_maxmsg": "",
+        "out_of_range_action": "stop"        
+    },  
+    "_limit_deduction_as_UMA_curr_law": {
+        "long_name": "Limit of deductions as a number of UMAs",
+        "description": "Deductions has specific and general limits. The general limits are set as the minimum between a % of gross incomes or a number of UMAS",
+        "itr_ref": "R code",
+        "notes": "",
+        "row_var": "AYEAR",
+        "row_label": [
+            "2018"
+        ],
+        "start_year": 2018,
+        "cpi_inflatable": false,
+        "cpi_inflated": false,
+        "col_var": "",
+        "col_label": "",
+        "boolean_value": false,
+        "integer_value": false,
+        "value": [
+            5
+        ],
+        "range": {
+            "min": 0,
+            "max": 10
+        },
+        "out_of_range_minmsg": "",
+        "out_of_range_maxmsg": "",
+        "out_of_range_action": "stop"        
+    },           
     "_allowance_wages_curr_law": {
         "long_name": "Number of UMAs of the allowance",
         "description": "Limit of the allowance in terms of UMA (days per week) applicable to wages or salary",
